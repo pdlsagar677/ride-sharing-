@@ -89,4 +89,4 @@ const RidePopUp = (props) => {
   )
 }
 
-export default Ri
+export default RidePopUp
