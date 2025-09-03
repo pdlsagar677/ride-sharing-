@@ -25,21 +25,23 @@ const CaptainSignup = () => {
   const submitHandler = async (e) => {
     e.preventDefault()
     setIsLoading(true)
-    
+
     const captainData = {
       fullname: {
-        firstname: firstName,
-        lastname: lastName
+        firstname: firstName.trim(),
+        lastname: lastName.trim(),
       },
-      email: email,
+      email: email.trim(),
       password: password,
       vehicle: {
-        color: vehicleColor,
-        plate: vehiclePlate,
-        capacity: vehicleCapacity,
+        color: vehicleColor.trim(),
+        plate: vehiclePlate.trim(),
+        capacity: Number(vehicleCapacity), // ✅ ensure it's a number
         vehicleType: vehicleType
       }
     }
+
+    console.log("🚀 Sending captainData:", captainData) // ✅ debug log
 
     try {
       const response = await axios.post('http://localhost:3000/api/captain/register', captainData, {
@@ -52,53 +54,17 @@ const CaptainSignup = () => {
         const data = response.data
         setCaptain(data.captain)
         localStorage.setItem('token', data.token)
-        
-        // Show success toast
-        toast.success('Captain account created successfully!', {
-          position: "top-right",
-          autoClose: 3000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          style: {
-            background: '#000',
-            color: '#fff',
-            border: '1px solid #f97316'
-          },
-          progressStyle: {
-            background: '#f97316'
-          }
-        })
-        
+        toast.success('Captain account created successfully!')
         navigate('/captain-home')
       }
     } catch (error) {
       console.error('Signup error:', error)
-      
-      // More detailed error handling
-      if (error.response) {
-        // The request was made and the server responded with a status code
-        // that falls out of the range of 2xx
-        console.error('Error data:', error.response.data)
-        console.error('Error status:', error.response.status)
-        console.error('Error headers:', error.response.headers)
-        
-        if (error.response.status === 400) {
-          toast.error('Invalid data. Please check your inputs and try again.')
-        } else if (error.response.status === 409) {
-          toast.error('An account with this email already exists.')
-        } else {
-          toast.error('Server error. Please try again later.')
-        }
-      } else if (error.request) {
-        // The request was made but no response was received
-        console.error('Error request:', error.request)
-        toast.error('Network error. Please check your connection and try again.')
+      if (error.response?.status === 400) {
+        toast.error('Invalid data. Please check your inputs.')
+      } else if (error.response?.status === 409) {
+        toast.error('An account with this email already exists.')
       } else {
-        // Something happened in setting up the request that triggered an Error
-        console.error('Error message:', error.message)
-        toast.error('An unexpected error occurred. Please try again.')
+        toast.error('Something went wrong, please try again later.')
       }
     } finally {
       setIsLoading(false)
@@ -125,12 +91,12 @@ const CaptainSignup = () => {
           <h1 className="text-2xl font-bold mb-2 text-gray-900">Become a Captain</h1>
           <p className="text-gray-600 mb-6">Join our team of professional drivers</p>
 
+          {/* Form */}
           <form onSubmit={submitHandler} className="space-y-4">
+            {/* First/Last Name */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="relative">
-                <label htmlFor="firstname" className="block text-sm font-medium text-gray-700 mb-1">
-                  First Name
-                </label>
+                <label htmlFor="firstname" className="block text-sm font-medium text-gray-700 mb-1">First Name</label>
                 <div className="relative">
                   <User className="absolute left-3 top-3 h-5 w-5 text-gray-400" />
                   <input
@@ -146,9 +112,7 @@ const CaptainSignup = () => {
               </div>
 
               <div className="relative">
-                <label htmlFor="lastname" className="block text-sm font-medium text-gray-700 mb-1">
-                  Last Name
-                </label>
+                <label htmlFor="lastname" className="block text-sm font-medium text-gray-700 mb-1">Last Name</label>
                 <div className="relative">
                   <User className="absolute left-3 top-3 h-5 w-5 text-gray-400" />
                   <input
@@ -164,10 +128,9 @@ const CaptainSignup = () => {
               </div>
             </div>
 
+            {/* Email */}
             <div className="relative">
-              <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
-                Email Address
-              </label>
+              <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">Email Address</label>
               <div className="relative">
                 <Mail className="absolute left-3 top-3 h-5 w-5 text-gray-400" />
                 <input
@@ -182,10 +145,9 @@ const CaptainSignup = () => {
               </div>
             </div>
 
+            {/* Password */}
             <div className="relative">
-              <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-1">
-                Password
-              </label>
+              <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-1">Password</label>
               <div className="relative">
                 <Lock className="absolute left-3 top-3 h-5 w-5 text-gray-400" />
                 <input
@@ -207,14 +169,13 @@ const CaptainSignup = () => {
               </div>
             </div>
 
+            {/* Vehicle Info */}
             <div className="pt-4 border-t border-gray-200">
               <h3 className="text-lg font-medium mb-4 text-gray-900">Vehicle Information</h3>
               
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div className="relative">
-                  <label htmlFor="vehicleColor" className="block text-sm font-medium text-gray-700 mb-1">
-                    Vehicle Color
-                  </label>
+                  <label htmlFor="vehicleColor" className="block text-sm font-medium text-gray-700 mb-1">Vehicle Color</label>
                   <div className="relative">
                     <Palette className="absolute left-3 top-3 h-5 w-5 text-gray-400" />
                     <input
@@ -230,9 +191,7 @@ const CaptainSignup = () => {
                 </div>
 
                 <div className="relative">
-                  <label htmlFor="vehiclePlate" className="block text-sm font-medium text-gray-700 mb-1">
-                    License Plate
-                  </label>
+                  <label htmlFor="vehiclePlate" className="block text-sm font-medium text-gray-700 mb-1">License Plate</label>
                   <div className="relative">
                     <Hash className="absolute left-3 top-3 h-5 w-5 text-gray-400" />
                     <input
@@ -250,9 +209,7 @@ const CaptainSignup = () => {
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
                 <div className="relative">
-                  <label htmlFor="vehicleCapacity" className="block text-sm font-medium text-gray-700 mb-1">
-                    Passenger Capacity
-                  </label>
+                  <label htmlFor="vehicleCapacity" className="block text-sm font-medium text-gray-700 mb-1">Passenger Capacity</label>
                   <div className="relative">
                     <Users className="absolute left-3 top-3 h-5 w-5 text-gray-400" />
                     <input
@@ -268,9 +225,7 @@ const CaptainSignup = () => {
                 </div>
 
                 <div className="relative">
-                  <label htmlFor="vehicleType" className="block text-sm font-medium text-gray-700 mb-1">
-                    Vehicle Type
-                  </label>
+                  <label htmlFor="vehicleType" className="block text-sm font-medium text-gray-700 mb-1">Vehicle Type</label>
                   <div className="relative">
                     <Vehicle className="absolute left-3 top-3 h-5 w-5 text-gray-400" />
                     <select
@@ -283,18 +238,20 @@ const CaptainSignup = () => {
                       <option value="" disabled>Select Vehicle Type</option>
                       <option value="car">Car</option>
                       <option value="auto">Auto</option>
-                      <option value="moto">Moto</option>
+                      <option value="motorcycle">Motorcycle</option>
                     </select>
                   </div>
                 </div>
               </div>
             </div>
 
+            {/* Security Note */}
             <div className="flex items-center text-sm">
               <Shield className="text-orange-500 mr-2" size={16} />
               <span className="text-gray-600">Your information is securely stored</span>
             </div>
 
+            {/* Submit */}
             <button 
               type="submit" 
               disabled={isLoading}
@@ -323,6 +280,7 @@ const CaptainSignup = () => {
           </p>
         </div>
       </div>
+
       <ToastContainer
         position="top-right"
         autoClose={3000}
