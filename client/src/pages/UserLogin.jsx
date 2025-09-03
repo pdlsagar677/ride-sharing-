@@ -133,7 +133,7 @@ const UserLogin = () => {
             to='/captain-login'
             className='bg-[#10b461] flex items-center justify-center text-white font-semibold rounded-lg px-4 py-3 w-full text-lg hover:bg-green-600 transition duration-300'
           >
-            Captain Login
+            Rider Login
           </Link>
         </div>
       </div>
