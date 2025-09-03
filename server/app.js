@@ -26,8 +26,8 @@ app.use(cookieParser());
 
 app.use('/api/users', userRoutes);
 app.use('/api/captain', captainRoutes);
-app.use('/maps', mapsRoutes);
-app.use('/rides', rideRoutes);
+app.use('/api/maps', mapsRoutes);
+app.use('/api/rides', rideRoutes);
 
 
 
