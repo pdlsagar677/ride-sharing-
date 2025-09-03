@@ -107,11 +107,7 @@ const Home = () => {
   return (
     <div className="h-screen relative bg-gray-50 overflow-hidden">
       {/* Top logo */}
-      <img
-        className="w-16 absolute left-5 top-5 z-20"
-        src="https://upload.wikimedia.org/wikipedia/commons/c/cc/Uber_logo_2018.png"
-        alt="logo"
-      />
+    
 
       {/* Map / Live Tracking */}
       <LiveTracking />

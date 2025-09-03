@@ -50,7 +50,7 @@ const CaptainHome = () => {
 
   async function confirmRide() {
     await axios.post(
-      `http://localhost:3000/rides/confirm`,
+      `http://localhost:3000/api/rides/confirm`,
       {
         rideId: ride._id,
         captainId: captain._id,
@@ -70,11 +70,7 @@ const CaptainHome = () => {
     <div className="h-screen relative">
       {/* Header */}
       <div className="fixed p-6 top-0 flex items-center justify-between w-screen z-20">
-        <img
-          className="w-16"
-          src="https://upload.wikimedia.org/wikipedia/commons/c/cc/Uber_logo_2018.png"
-          alt="logo"
-        />
+        
         <Link
           to="/captain-home"
           className="h-10 w-10 bg-white flex items-center justify-center rounded-full"

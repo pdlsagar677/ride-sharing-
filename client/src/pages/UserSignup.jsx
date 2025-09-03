@@ -194,7 +194,7 @@ const UserSignup = () => {
             Drive with RideNepal and earn by sharing rides with thousands of passengers.
           </p>
           <div className="flex gap-4 justify-center">
-            <Link to="/captain/login" className="px-4 py-2 bg-black text-white rounded-lg hover:bg-orange-600">Captain Login</Link>
+            <Link to="/captain-login" className="px-4 py-2 bg-black text-white rounded-lg hover:bg-orange-600">Rider Login</Link>
           </div>
         </div>
 
