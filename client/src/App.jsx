@@ -5,6 +5,7 @@ import Start from './pages/Start'
 import UserSignup from './pages/UserSignup'
 import { ToastContainer } from 'react-toastify'
 import CaptainSignup from './pages/CaptainSignup'
+import UserLogin from './pages/UserLogin'
 
 function App() {
   return (
@@ -12,6 +13,8 @@ function App() {
       <Routes>
         <Route path='/' element={<Start />} />
         <Route path='/signup' element={<UserSignup />} />
+        <Route path='/login' element={<UserLogin />} />
+
         <Route path='/captain-signup' element={<CaptainSignup />} />
 
       </Routes>
